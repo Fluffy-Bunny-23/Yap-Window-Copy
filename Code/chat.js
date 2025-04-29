@@ -2015,8 +2015,8 @@ Make sure to follow all the instructions while answering questions.
       } else if (pureMessage.trim().toLowerCase().startsWith("/test")) {
         const botMessageRef = push(messagesRef);
         await update(botMessageRef, {
-          User: "Tester",
-          Message: `HIIIIIII`,
+          User: "[Tester]",
+          Message: `window.promt(what should I say?)`,
           Date: Date.now(),
         });
 

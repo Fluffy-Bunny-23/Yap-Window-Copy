@@ -1,4 +1,5 @@
 (async function () {
+  var count = 0
   var readMessages = {};
   var readAll = true;
   var isDark = false;
@@ -2012,11 +2013,12 @@ Make sure to follow all the instructions while answering questions.
             createSnakeGame();
           }
         }
-      } else if (pureMessage.trim().toLowerCase().startsWith("/test")) {
+      } else if (pureMessage.trim().toLowerCase().startsWith("/count")) {
+        var count = count + 1
         const botMessageRef = push(messagesRef);
         await update(botMessageRef, {
-          User: "[Tester]",
-          Message: `window.promt(what should I say?)`,
+          User: "[counter]",
+          Message: `count`,
           Date: Date.now(),
         });
 

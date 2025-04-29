@@ -2018,7 +2018,7 @@ Make sure to follow all the instructions while answering questions.
         const botMessageRef = push(messagesRef);
         await update(botMessageRef, {
           User: "[counter]",
-          Message: `count`,
+          Message: count,
           Date: Date.now(),
         });
 

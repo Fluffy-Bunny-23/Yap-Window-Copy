@@ -2015,7 +2015,7 @@ Make sure to follow all the instructions while answering questions.
         }
       } else if (pureMessage.trim().toLowerCase().startsWith("/count")) {
         var count = count + 1
-        var text = count
+        var text = "hello"
         const botMessageRef = push(messagesRef);
         await update(botMessageRef, {
           User: "[Counter]",

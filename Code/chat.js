@@ -2012,8 +2012,14 @@ Make sure to follow all the instructions while answering questions.
             createSnakeGame();
           }
         }
-      } else if (pureMessage.trim().toLowerCase().startsWith("/insert_command")) {
-        /* CODE HERE*/
+      } else if (pureMessage.trim().toLowerCase().startsWith("/test")) {
+        const botMessageRef = push(messagesRef);
+        await update(botMessageRef, {
+          User: "Tester",
+          Message: `HIIIIIII`,
+          Date: Date.now(),
+        });
+
       } else {
         const newMessageRef = push(messagesRef);
         await update(newMessageRef, {

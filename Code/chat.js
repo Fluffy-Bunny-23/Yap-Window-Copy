@@ -2038,7 +2038,7 @@ Make sure to follow all the instructions while answering questions.
       
         const botMessageRef = push(messagesRef);
         await update(botMessageRef, {
-          User: "[Counter]",
+          User: BOT_USERS.COUNTER,
           Message: responseMessage,
           Date: Date.now(),
         });

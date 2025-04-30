@@ -2026,7 +2026,7 @@ Make sure to follow all the instructions while answering questions.
           count--;
           responseMessage = `Count decreased to ${count}`;
         } else {
-          responseMessage = `Current count is ${count}, if you ish to change this, please us /count up and /count down`;
+          responseMessage = `Current count is ${count}, if you wish to change this, please us /count up and /count down`;
           
         }
       
@@ -2040,7 +2040,7 @@ Make sure to follow all the instructions while answering questions.
         const botMessageRef = push(messagesRef);
         await update(botMessageRef, {
           User: BOT_USERS.COUNTER,
-          Message: "${responseMessage} Hello",
+          Message: responseMessage,
           Date: Date.now(),
         });
       }

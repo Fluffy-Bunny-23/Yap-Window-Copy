@@ -1,5 +1,5 @@
 (async function () {
-  var count = 15
+  var count = 0
   var readMessages = {};
   var readAll = true;
   var isDark = false;

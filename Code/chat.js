@@ -1765,8 +1765,7 @@ Here are some instructions on how to respond.
 Now, respond to the user's question naturally:
 User: ${email} asks: ${noFilesMessage}
 
-Make sure to follow all the instructions while answering questions.
-`;
+Make sure to follow all the instructions while answering questions.`;
 
         let aiReply = null;
         let successfulRequest = false;
@@ -3457,8 +3456,7 @@ Make sure to follow all the instructions while answering questions.
         memberElement.className = "selected-member";
         memberElement.innerHTML = `
     ${member.email}
-    <span class="remove-member">×</span>
-`;
+    <span class="remove-member">×</span>`;
 
         memberElement.querySelector(".remove-member").onclick = () => {
           memberElement.remove();
@@ -3783,4 +3781,4 @@ Make sure to follow all the instructions while answering questions.
   const messagesDiv = document.getElementById("messages");
   messagesDiv.scrollTop = messagesDiv.scrollHeight;
   updateModifyButtonVisibility();
-})();
+;

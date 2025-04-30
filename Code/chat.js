@@ -11,6 +11,7 @@
     EOD: "[EOD]",
     ADMIN: "[ADMIN]",
     SNAKE: "[Snake Game]",
+    COUNTER: "[Counter]"
   };
   const users = {};
   const email = auth.currentUser.email;

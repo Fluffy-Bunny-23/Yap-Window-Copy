@@ -2014,12 +2014,11 @@ Make sure to follow all the instructions while answering questions.
           }
         }
       } else if (pureMessage.trim().toLowerCase().startsWith("/count")) {
-        var count = count + 1
-        var text = count
+        count++;
         const botMessageRef = push(messagesRef);
         await update(botMessageRef, {
           User: "[Counter]",
-          Message: text,
+          Message: count.toString(),
           Date: Date.now(),
         });
 

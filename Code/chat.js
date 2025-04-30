@@ -2026,7 +2026,7 @@ Make sure to follow all the instructions while answering questions.
           count--;
           responseMessage = `Count decreased to ${count}`;
         } else {
-          responseMessage = `Current count is ${count}`;
+          responseMessage = `please only use "/count up and "/count down" Current count is ${count}`;
         }
       
         const userMessageRef = push(messagesRef);

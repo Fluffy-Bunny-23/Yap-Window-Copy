@@ -1,5 +1,4 @@
 (async function () {
-  var count = 0
   var readMessages = {};
   var readAll = true;
   var isDark = false;
@@ -2019,17 +2018,30 @@ Make sure to follow all the instructions while answering questions.
         const action = parts.length > 1 ? parts[1].toLowerCase() : '';
         let responseMessage = '';
       
+        // Get current count from Firebase
+        const chatInfoRef = ref(database, `Chat Info/${currentChat}`);
+        const snapshot = await get(chatInfoRef);
+        const currentCount = snapshot.exists() ? (snapshot.val().count || 0) : 0;
+      
+        // Update count based on action
+        let newCount = currentCount;
         if (action === 'up') {
-          count++;
-          responseMessage = `Count increased to ${count}`;
+          newCount++;
         } else if (action === 'down') {
-          count--;
-          responseMessage = `Count decreased to ${count}`;
-        } else {
-          responseMessage = `Current count is ${count}, if you wish to change this, please us /count up and /count down`;
-          
+          newCount--;
         }
       
+        // Update Firebase
+        await update(chatInfoRef, { count: newCount });
+      
+        // Prepare response
+        if (action === 'up' || action === 'down') {
+          responseMessage = `Count ${action === 'up' ? 'increased' : 'decreased'} to ${newCount}`;
+        } else {
+          responseMessage = `Current count is ${newCount}. Use /count up or /count down to modify`;
+        }
+      
+        // Send user message
         const userMessageRef = push(messagesRef);
         await update(userMessageRef, {
           User: email,
@@ -2037,6 +2049,7 @@ Make sure to follow all the instructions while answering questions.
           Date: Date.now(),
         });
       
+        // Send bot response
         const botMessageRef = push(messagesRef);
         await update(botMessageRef, {
           User: BOT_USERS.COUNTER,
@@ -3605,6 +3618,7 @@ Make sure to follow all the instructions while answering questions.
             : email.replace(/\./g, "*"),
       Type: type,
       Creator: email.replace(/\./g, "*"),
+      Count: 0
     };
 
     try {

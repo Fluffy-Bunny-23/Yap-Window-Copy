@@ -2036,9 +2036,9 @@ Make sure to follow all the instructions while answering questions.
       
         // Prepare response
         if (action === 'up' || action === 'down') {
-          responseMessage = `Count ${action === 'up' ? 'increased' : 'decreased'} to ${newCount}`;
+          responseMessage = `Count ${action === 'up' ? 'increased' : 'decreased'} to <strong>${newCount}</strong>`;
         } else {
-          responseMessage = `Current count is ${newCount}. Use /count up or /count down to modify`;
+          responseMessage = `Current count is <strong>${newCount}</strong>. Use /count up or /count down to modify`;
         }
       
         // Send user message

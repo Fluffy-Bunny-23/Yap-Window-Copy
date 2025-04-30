@@ -2013,26 +2013,33 @@ Make sure to follow all the instructions while answering questions.
             createSnakeGame();
           }
         }
-      } else if (pureMessage.trim().toLowerCase().startsWith("/count")) {
+      } // In the sendMessage function, replace the existing /count handler:
+      else if (pureMessage.trim().toLowerCase().startsWith("/count")) {
+        const parts = pureMessage.trim().split(/\s+/);
+        const action = parts.length > 1 ? parts[1].toLowerCase() : '';
+        let responseMessage = '';
+      
+        if (action === 'up') {
+          count++;
+          responseMessage = `Count increased to ${count}`;
+        } else if (action === 'down') {
+          count--;
+          responseMessage = `Count decreased to ${count}`;
+        } else {
+          responseMessage = `Current count is ${count}`;
+        }
+      
         const userMessageRef = push(messagesRef);
         await update(userMessageRef, {
           User: email,
-          Message: "/Count",
+          Message: pureMessage,
           Date: Date.now(),
         });
-        count++;
+      
         const botMessageRef = push(messagesRef);
         await update(botMessageRef, {
           User: "[Counter]",
-          Message: count.toString(),
-          Date: Date.now(),
-        });
-        
-      } else {
-        const newMessageRef = push(messagesRef);
-        await update(newMessageRef, {
-          User: email,
-          Message: message,
+          Message: responseMessage,
           Date: Date.now(),
         });
       }

@@ -2079,7 +2079,7 @@ Make sure to follow all the instructions while answering questions.`;
     isSending = false;
     sendButton.disabled = false;
   }
-
+})();
   function formatDate(timestamp) {
     const messageDate = new Date(timestamp);
     const today = new Date();
@@ -3781,4 +3781,4 @@ Make sure to follow all the instructions while answering questions.`;
   const messagesDiv = document.getElementById("messages");
   messagesDiv.scrollTop = messagesDiv.scrollHeight;
   updateModifyButtonVisibility();
-;
+})();

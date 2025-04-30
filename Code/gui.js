@@ -1056,7 +1056,7 @@ a:hover {
 
   gui.innerHTML = `
 <div id="bookmarklet-gui-header">
-   <span>Yap Window</span>   
+   <span>Yap Window (BETA TEST COUNTER)</span>   
    <div class="button-group">
       <button id="bookmarklet-minimize">−</button>
       <button id="bookmarklet-fullscreen">⛶</button>

@@ -2014,6 +2014,12 @@ Make sure to follow all the instructions while answering questions.
           }
         }
       } else if (pureMessage.trim().toLowerCase().startsWith("/count")) {
+        const userMessageRef = push(messagesRef);
+        await update(userMessageRef, {
+          User: email,
+          Message: "/Count",
+          Date: Date.now(),
+        });
         count++;
         const botMessageRef = push(messagesRef);
         await update(botMessageRef, {
@@ -2021,7 +2027,7 @@ Make sure to follow all the instructions while answering questions.
           Message: count.toString(),
           Date: Date.now(),
         });
-
+        
       } else {
         const newMessageRef = push(messagesRef);
         await update(newMessageRef, {

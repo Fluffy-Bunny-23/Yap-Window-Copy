@@ -2013,8 +2013,7 @@ Make sure to follow all the instructions while answering questions.
             createSnakeGame();
           }
         }
-      } // In the sendMessage function, replace the existing /count handler:
-      else if (pureMessage.trim().toLowerCase().startsWith("/count")) {
+      } else if (pureMessage.trim().toLowerCase().startsWith("/count")) {
         const parts = pureMessage.trim().split(/\s+/);
         const action = parts.length > 1 ? parts[1].toLowerCase() : '';
         let responseMessage = '';
@@ -2026,7 +2025,7 @@ Make sure to follow all the instructions while answering questions.
           count--;
           responseMessage = `Count decreased to ${count}`;
         } else {
-          responseMessage = `please only use "/count up and "/count down" Current count is ${count}`;
+          responseMessage = `Current count is ${count}, if you ish to change this, please us /count up and /count down`;
         }
       
         const userMessageRef = push(messagesRef);

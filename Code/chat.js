@@ -2032,7 +2032,7 @@ Make sure to follow all the instructions while answering questions.
         const userMessageRef = push(messagesRef);
         await update(userMessageRef, {
           User: email,
-          Message: pureMessage+"HIIIIIII",
+          Message: pureMessage,
           Date: Date.now(),
         });
       

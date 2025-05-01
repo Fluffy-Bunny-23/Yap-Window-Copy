@@ -2056,8 +2056,6 @@ Make sure to follow all the instructions while answering questions.
           Message: responseMessage,
           Date: Date.now(),
         });
-      } else if (pureMessage.trim().toLowerCase().startsWith("/count")) {
-      
       } else {
         // Handle regular message
         const userMessageRef = push(messagesRef);
@@ -2350,7 +2348,7 @@ Make sure to follow all the instructions while answering questions.
         }
       });
 
-      const items = ["[AI]", "[EOD]", "[RNG]", "[Snake Game]", "Everyone, "Staff"];
+      const items = ["[AI]", "[EOD]", "[RNG]", "[Snake Game]", "Everyone,"Staff"];
       const usernames = ["AI", "EOD", "RNG", "Snake", "Everyone", "Staff"];
 
       items.forEach((item, index) => {

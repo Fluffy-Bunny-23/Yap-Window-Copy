@@ -1638,7 +1638,147 @@
       }
     });
   }
-
+  function createClickerGame() {
+    const temp_email = typeof email !== "undefined" ? email.replace(/\./g, "*") : "anonymous";
+    let score = 0;
+    let highScore = 0;
+    let gameActive = true;
+  
+    const gameContainer = document.createElement("div");
+    gameContainer.id = "clicker-game-container";
+    gameContainer.style.position = "fixed";
+    gameContainer.style.top = "50%";
+    gameContainer.style.left = "50%";
+    gameContainer.style.transform = "translate(-50%, -50%)";
+    gameContainer.style.width = "90%";
+    gameContainer.style.maxWidth = "500px";
+    gameContainer.style.padding = "20px";
+    gameContainer.style.backgroundColor = isDark ? "#2c2c2c" : "#fff";
+    gameContainer.style.borderRadius = "10px";
+    gameContainer.style.boxShadow = "0 4px 8px rgba(0,0,0,0.2)";
+    gameContainer.style.zIndex = "1999999";
+    gameContainer.style.textAlign = "center";
+  
+    // Score displays
+    const scoreContainer = document.createElement("div");
+    scoreContainer.style.display = "flex";
+    scoreContainer.style.justifyContent = "space-between";
+    scoreContainer.style.marginBottom = "20px";
+  
+    const scoreDisplay = document.createElement("div");
+    scoreDisplay.textContent = `Score: ${score}`;
+    scoreDisplay.style.fontSize = "24px";
+    scoreDisplay.style.color = isDark ? "#fff" : "#333";
+  
+    const highScoreDisplay = document.createElement("div");
+    highScoreDisplay.textContent = `High Score: ${highScore}`;
+    highScoreDisplay.style.fontSize = "24px";
+    highScoreDisplay.style.color = "#ffd700";
+  
+    scoreContainer.appendChild(scoreDisplay);
+    scoreContainer.appendChild(highScoreDisplay);
+    gameContainer.appendChild(scoreContainer);
+  
+    // Click button
+    const clickButton = document.createElement("button");
+    clickButton.textContent = "CLICK ME!";
+    clickButton.style.fontSize = "24px";
+    clickButton.style.padding = "20px 40px";
+    clickButton.style.margin = "20px";
+    clickButton.style.borderRadius = "10px";
+    clickButton.style.backgroundColor = "#4CAF50";
+    clickButton.style.color = "white";
+    clickButton.style.border = "none";
+    clickButton.style.cursor = "pointer";
+  
+    // Upgrade button
+    const upgradeButton = document.createElement("button");
+    upgradeButton.textContent = "Buy Multiplier (Cost: 50)";
+    upgradeButton.style.margin = "10px";
+    upgradeButton.style.padding = "10px 20px";
+    upgradeButton.disabled = true;
+  
+    let clickValue = 1;
+    let multiplierCost = 50;
+  
+    // Click handler
+    clickButton.addEventListener("click", () => {
+      if (!gameActive) return;
+      score += clickValue;
+      scoreDisplay.textContent = `Score: ${score}`;
+      
+      if (score >= multiplierCost) {
+        upgradeButton.disabled = false;
+      }
+    });
+  
+    // Upgrade handler
+    upgradeButton.addEventListener("click", () => {
+      if (score >= multiplierCost) {
+        score -= multiplierCost;
+        clickValue++;
+        multiplierCost = Math.round(multiplierCost * 1.5);
+        upgradeButton.textContent = `Buy Multiplier (Cost: ${multiplierCost})`;
+        scoreDisplay.textContent = `Score: ${score}`;
+        if (score < multiplierCost) {
+          upgradeButton.disabled = true;
+        }
+      }
+    });
+  
+    gameContainer.appendChild(clickButton);
+    gameContainer.appendChild(upgradeButton);
+  
+    // Close button
+    const closeButton = document.createElement("button");
+    closeButton.textContent = "Close";
+    closeButton.style.marginTop = "20px";
+    closeButton.style.padding = "10px 20px";
+    closeButton.style.backgroundColor = "#f44336";
+    closeButton.style.color = "white";
+    closeButton.style.border = "none";
+    closeButton.style.borderRadius = "5px";
+    closeButton.style.cursor = "pointer";
+  
+    // Load high scores
+    function loadHighScores() {
+      try {
+        const localHigh = localStorage.getItem(`clickerHigh_${temp_email}`);
+        if (localHigh) {
+          highScore = parseInt(localHigh);
+          highScoreDisplay.textContent = `High Score: ${highScore}`;
+        }
+      } catch (e) {}
+  
+      if (typeof database !== "undefined") {
+        const scoreRef = ref(database, `ClickerScores/${temp_email}`);
+        get(scoreRef).then((snapshot) => {
+          if (snapshot.exists() && snapshot.val() > highScore) {
+            highScore = snapshot.val();
+            highScoreDisplay.textContent = `High Score: ${highScore}`;
+          }
+        });
+      }
+    }
+  
+    closeButton.addEventListener("click", () => {
+      gameContainer.remove();
+      if (score > highScore) {
+        highScore = score;
+        localStorage.setItem(`clickerHigh_${temp_email}`, highScore.toString());
+        
+        if (typeof database !== "undefined") {
+          set(ref(database, `ClickerScores/${temp_email}`), highScore)
+            .catch(error => console.error("Error saving clicker score:", error));
+        }
+      }
+      gameActive = false;
+    });
+  
+    gameContainer.appendChild(closeButton);
+    document.body.appendChild(gameContainer);
+    loadHighScores();
+  }
   async function sendMessage() {
     if (isSending) return;
     isSending = true;
@@ -2013,6 +2153,7 @@ Make sure to follow all the instructions while answering questions.
             createSnakeGame();
           }
         }
+      
       } else if (pureMessage.trim().toLowerCase().startsWith("/count")) {
         const parts = pureMessage.trim().split(/\s+/);
         const action = parts.length > 1 ? parts[1].toLowerCase() : '';
@@ -2056,6 +2197,8 @@ Make sure to follow all the instructions while answering questions.
           Message: responseMessage,
           Date: Date.now(),
         });
+      
+      
       } else {
         // Handle regular message
         const userMessageRef = push(messagesRef);

@@ -880,6 +880,7 @@
           if (
             mention.dataset.email === email ||
             mention.dataset.email === "Everyone"
+            mention.dataset.email === "Staff"
           ) {
             mention.classList.add("highlight");
           }

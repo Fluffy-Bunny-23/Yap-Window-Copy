@@ -2056,7 +2056,6 @@ Make sure to follow all the instructions while answering questions.
           Message: responseMessage,
           Date: Date.now(),
         });
-      }
       } else {
         // Handle regular message
         const userMessageRef = push(messagesRef);

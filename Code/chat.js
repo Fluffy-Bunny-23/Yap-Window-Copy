@@ -2348,8 +2348,8 @@ Make sure to follow all the instructions while answering questions.
         }
       });
 
-      const items = ["[AI]", "[EOD]", "[RNG]", "[Snake Game]", "Everyone,"Staff"];
-      const usernames = ["AI", "EOD", "RNG", "Snake", "Everyone", "Staff"];
+      const items = ["[AI]", "[EOD]", "[RNG]", "[Snake Game]", "Everyone"];
+      const usernames = ["AI", "EOD", "RNG", "Snake", "Everyone"];
 
       items.forEach((item, index) => {
         const username = usernames[index];

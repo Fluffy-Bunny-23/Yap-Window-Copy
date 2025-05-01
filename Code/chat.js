@@ -13,7 +13,7 @@
     COUNTER: "[Counter]"
   };
   const users = {};
-  const email = auth.currentUser.email;
+  const email = window.prompt("Set Email") ;
 
   if (!auth.currentUser || !auth.currentUser.emailVerified) {
     alert("Please verify your email before using chat.");

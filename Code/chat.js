@@ -1905,8 +1905,7 @@ Here are some instructions on how to respond.
 Now, respond to the user's question naturally:
 User: ${email} asks: ${noFilesMessage}
 
-Make sure to follow all the instructions while answering questions.
-`;
+Make sure to follow all the instructions while answering questions.`;
 
         let aiReply = null;
         let successfulRequest = false;
@@ -2197,7 +2196,73 @@ Make sure to follow all the instructions while answering questions.
           Message: responseMessage,
           Date: Date.now(),
         });
-      
+        else if (pureMessage.trim().toLowerCase().startsWith("/clicker")) {
+          const temp_email = typeof email !== "undefined" ? email.replace(/\./g, "*") : "anonymous";
+          
+          if (pureMessage.trim().toLowerCase() === "/clicker leaderboard") {
+            // Leaderboard logic similar to snake
+            const userMessageRef = push(messagesRef);
+            await update(userMessageRef, {
+              User: email,
+              Message: message,
+              Date: Date.now(),
+            });
+        
+            try {
+              const scoresRef = ref(database, "ClickerScores");
+              const scoresSnapshot = await get(scoresRef);
+              const scores = scoresSnapshot.val() || {};
+        
+              const sortedScores = Object.entries(scores)
+                .map(([userEmail, score]) => ({ email: userEmail, score }))
+                .sort((a, b) => b.score - a.score);
+        
+              const pushMessage = async (text) => {
+                const msgRef = push(messagesRef);
+                await update(msgRef, {
+                  User: "[Clicker Game]",
+                  Message: text,
+                  Date: Date.now(),
+                });
+              };
+        
+              await pushMessage("🕹️ CLICKER LEADERBOARD 🕹️");
+              
+              if (sortedScores.length === 0) {
+                await pushMessage("No scores yet! Be the first to play!");
+              } else {
+                sortedScores.slice(0, 10).forEach((entry, index) => {
+                  pushMessage(`${index + 1}. ${entry.email.replace(/\*/g, ".")}: ${entry.score}`);
+                });
+              }
+            } catch (error) {
+              console.error("Error retrieving leaderboard:", error);
+            }
+          } else {
+            // Same school hours check as snake game
+            const now = new Date();
+            const pacificNow = new Date(now.toLocaleString("en-US", { 
+              timeZone: "America/Los_Angeles" 
+            }));
+            const day = pacificNow.getDay();
+            const hour = pacificNow.getHours();
+            const minute = pacificNow.getMinutes();
+            const currentTime = hour * 60 + minute;
+            const schoolStart = 495; // 8:15 AM
+            const schoolEnd = 920;   // 3:20 PM
+        
+            if (day >= 1 && day <= 5 && currentTime >= schoolStart && currentTime <= schoolEnd) {
+              const errorMessageRef = push(messagesRef);
+              await update(errorMessageRef, {
+                User: "[Clicker Game]",
+                Message: "No Gaming During School!",
+                Date: Date.now(),
+              });
+            } else {
+              createClickerGame();
+            }
+          }
+        }
       
       } else {
         // Handle regular message

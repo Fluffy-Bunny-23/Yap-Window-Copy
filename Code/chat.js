@@ -2154,8 +2154,9 @@ Make sure to follow all the instructions while answering questions.`;
         }
         if (pureMessage.trim().toLowerCase().startsWith("/clicker")) {
           const temp_email = typeof email !== "undefined" ? email.replace(/\./g, "*") : "anonymous";
-          
+          console.log("/clicker activated")
           if (pureMessage.trim().toLowerCase() === "/clicker leaderboard") {
+            console.log(" Clicker Leaderboard running")
             // Leaderboard logic similar to snake
             const userMessageRef = push(messagesRef);
             await update(userMessageRef, {
@@ -2195,6 +2196,7 @@ Make sure to follow all the instructions while answering questions.`;
               console.error("Error retrieving leaderboard:", error);
             }
           } else {
+            console.log("Check Time for Clicker")
             // Same school hours check as snake game
             const now = new Date();
             const pacificNow = new Date(now.toLocaleString("en-US", { 
@@ -2208,6 +2210,7 @@ Make sure to follow all the instructions while answering questions.`;
             const schoolEnd = 920;   // 3:20 PM
         
             if (day >= 1 && day <= 5 && currentTime >= schoolStart && currentTime <= schoolEnd) {
+              console.log("schooltime is active")
               const errorMessageRef = push(messagesRef);
               await update(errorMessageRef, {
                 User: "[Clicker Game]",
@@ -2215,6 +2218,7 @@ Make sure to follow all the instructions while answering questions.`;
                 Date: Date.now(),
               });
             } else {
+              console.log("starting clicker game")
               createClickerGame();
             }
           }

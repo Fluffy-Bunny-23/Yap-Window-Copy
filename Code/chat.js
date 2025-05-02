@@ -2152,7 +2152,7 @@ Make sure to follow all the instructions while answering questions.`;
             createSnakeGame();
           }
         }
-        else if (pureMessage.trim().toLowerCase().startsWith("/clicker")) {
+        if (pureMessage.trim().toLowerCase().startsWith("/clicker")) {
           const temp_email = typeof email !== "undefined" ? email.replace(/\./g, "*") : "anonymous";
           
           if (pureMessage.trim().toLowerCase() === "/clicker leaderboard") {
